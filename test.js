@@ -1,19 +1,7 @@
-// import data from "./memberdata.json";
 import pkg from "enquirer";
 const { prompt } = pkg;
-import fs from "fs";
-
-console.log("日向坂レコメンダーへようこそ!!");
-console.log("5つの質問に答えて、自分にぴったりの日向坂メンバーを見つけよう!!");
 
 async function hinatazakaRecommender() {
-  const preparation = await prompt({
-    type: "select",
-    name: "preparation",
-    message: "準備はいいですか？",
-    choices: ["はい", "いいえ"],
-  });
-
   const answer1 = await prompt({
     type: "select",
     name: "generation",
@@ -24,7 +12,7 @@ async function hinatazakaRecommender() {
   const answer2 = await prompt({
     type: "select",
     name: "from",
-    message: "どの出身地がいいですか？",
+    message: "出身地はどこですか？",
     choices: ["関東", "関西", "地方"],
   });
 
@@ -38,15 +26,16 @@ async function hinatazakaRecommender() {
   const answer4 = await prompt({
     type: "select",
     name: "character",
-    message: "どんなキャラが好きですか？",
-    choices: ["天然", "賢い", "クール", "おバカ", "ピュア"],
+    message: "キャラはどうですか？",
+    choices: ["おバカ", "賢い", "クール", "天然", "ピュア"],
   });
 
   const answer5 = await prompt({
     type: "select",
     name: "looks",
-    message: "見た目は？",
+    message: "見た目はどうですか？",
     choices: ["かわいい", "きれい"],
   });
 }
+
 hinatazakaRecommender();
