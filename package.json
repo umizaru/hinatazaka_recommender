@@ -8,6 +8,7 @@
     "prettier": "2.8.8"
   },
   "dependencies": {
+    "array-shuffle": "^3.0.0",
     "enquirer": "^2.3.6",
     "fs": "^0.0.1-security"
   },

@@ -2,6 +2,7 @@ import { generateKey } from "crypto";
 import membersData from "./memberdata.json" assert { type: "json" };
 import pkg from "enquirer";
 const { prompt } = pkg;
+
 import fs from "fs";
 
 console.log("日向坂レコメンダーへようこそ!!");
@@ -11,7 +12,7 @@ async function hinatazakaRecommender() {
   const preparation = await prompt({
     type: "select",
     name: "preparation",
-    message: "準備はいいですか？",
+    message: "準備ができたら[はい]を推してください",
     choices: ["はい"],
   });
 
@@ -90,24 +91,22 @@ async function hinatazakaRecommender() {
 
   let maxPoint = 0;
   let recommendedMembers = [];
+  console.log(memberPoints);
 
   for (const member in memberPoints) {
     if (memberPoints[member] > maxPoint) {
+      recommendedMembers = [];
+      recommendedMembers.push(member);
       maxPoint = memberPoints[member];
-      recommendedMembers = member;
     } else if (memberPoints[member] === maxPoint) {
       recommendedMembers.push(member);
     }
   }
-
-  // if (recommendedMembers.length > 2) {
-  //   let selectedMember =
-  //     recommendedMembers[Math.floor(Math.random() * recommendedMembers.length)];
-  //   console.log(selectedMember);
-  // }
-
-  let selectedMember = membersData.find(
-    (element) => element.name === recommendedMembers
+  console.log(recommendedMembers);
+  const recommendedMembers1 =
+    recommendedMembers[Math.floor(Math.random() * recommendedMembers.length)];
+  const selectedMember = membersData.find(
+    (element) => element.name === recommendedMembers1
   );
   console.log("メンバー名:", selectedMember.name);
   console.log("キャッチフレーズ:", selectedMember.catchphrase);
