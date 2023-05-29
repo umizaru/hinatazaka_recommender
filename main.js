@@ -3,8 +3,6 @@ import membersData from "./memberdata.json" assert { type: "json" };
 import pkg from "enquirer";
 const { prompt } = pkg;
 
-import fs from "fs";
-
 console.log("日向坂レコメンダーへようこそ!!");
 console.log("5つの質問に答えて、自分にぴったりの日向坂メンバーを見つけよう!!");
 
@@ -91,7 +89,6 @@ async function hinatazakaRecommender() {
 
   let maxPoint = 0;
   let recommendedMembers = [];
-  console.log(memberPoints);
 
   for (const member in memberPoints) {
     if (memberPoints[member] > maxPoint) {
@@ -102,14 +99,15 @@ async function hinatazakaRecommender() {
       recommendedMembers.push(member);
     }
   }
-  console.log(recommendedMembers);
+
   const recommendedMembers1 =
     recommendedMembers[Math.floor(Math.random() * recommendedMembers.length)];
   const selectedMember = membersData.find(
     (element) => element.name === recommendedMembers1
   );
-  console.log("メンバー名:", selectedMember.name);
-  console.log("キャッチフレーズ:", selectedMember.catchphrase);
-  console.log("ブログURL:", selectedMember.url);
+  console.log("あなたにぴったりの日向坂メンバーは…");
+  console.log(`${selectedMember.catchphrase}${selectedMember.name}だ!!`);
+  console.log("ぜひメンバーのブログもチェックしてみてね！");
+  console.log(selectedMember.url);
 }
 hinatazakaRecommender();
