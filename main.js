@@ -1,12 +1,15 @@
-import { generateKey } from "crypto";
-import membersData from "./memberdata.json" assert { type: "json" };
+import { readFile } from "fs/promises";
 import pkg from "enquirer";
 const { prompt } = pkg;
-
-console.log("日向坂レコメンダーへようこそ!!");
-console.log("5つの質問に答えて、自分にぴったりの日向坂メンバーを見つけよう!!");
+const memberData = JSON.parse(await readFile("./memberdata.json"));
+const questionData = JSON.parse(await readFile("./questiondata.json"));
 
 async function hinatazakaRecommender() {
+  console.log("日向坂レコメンダーへようこそ!!");
+  console.log(
+    "5つの質問に答えて、自分にぴったりの日向坂メンバーを見つけよう!!"
+  );
+
   const preparation = await prompt({
     type: "select",
     name: "preparation",
@@ -14,77 +17,30 @@ async function hinatazakaRecommender() {
     choices: ["はい"],
   });
 
-  const answer1 = await prompt({
-    type: "select",
-    name: "generation",
-    message: "何期生が好きですか？",
-    choices: ["1期生", "2期生", "3期生"],
-  });
-
-  const answer2 = await prompt({
-    type: "select",
-    name: "from_region",
-    message: "どの出身地がいいですか？",
-    choices: ["関東", "関西", "地方"],
-  });
-
-  const answer3 = await prompt({
-    type: "select",
-    name: "height_group",
-    message: "身長はどうですか？",
-    choices: ["高", "中", "低"],
-  });
-
-  const answer4 = await prompt({
-    type: "select",
-    name: "character",
-    message: "どんなキャラが好きですか？",
-    choices: ["天然", "賢い", "クール", "おバカ", "ピュア"],
-  });
-
-  const answer5 = await prompt({
-    type: "select",
-    name: "looks",
-    message: "見た目は？",
-    choices: ["きれい", "かわいい"],
-  });
-
   let memberPoints = {};
 
-  membersData.forEach(function (member) {
+  memberData.forEach(function (member) {
     memberPoints[member.name] = 0;
   });
 
-  const { generation } = answer1;
-  const { from_region } = answer2;
-  const { height_group } = answer3;
-  const { character } = answer4;
-  const { looks } = answer5;
+  const answers = {};
+  for (const { name, message, choices } of questionData) {
+    const { [name]: answer } = await prompt({
+      type: "select",
+      name,
+      message,
+      choices,
+    });
+    answers[name] = answer;
+  }
 
-  for (const member of membersData) {
-    if (member.generation === generation) {
-      memberPoints[member.name] += 1;
-    }
-  }
-  for (const member of membersData) {
-    if (member.from_region === from_region) {
-      memberPoints[member.name] += 1;
-    }
-  }
-  for (const member of membersData) {
-    if (member.height_group === height_group) {
-      memberPoints[member.name] += 1;
-    }
-  }
-  for (const member of membersData) {
-    if (member.character === character) {
-      memberPoints[member.name] += 1;
-    }
-  }
-  for (const member of membersData) {
-    if (member.looks === looks) {
-      memberPoints[member.name] += 1;
-    }
+  for (const member of memberData) {
+    const { generation, from_region, height_group, character, looks } = answers;
+    if (member.generation === generation) memberPoints[member.name] += 1;
+    if (member.from_region === from_region) memberPoints[member.name] += 1;
+    if (member.height_group === height_group) memberPoints[member.name] += 1;
+    if (member.character === character) memberPoints[member.name] += 1;
+    if (member.looks === looks) memberPoints[member.name] += 1;
   }
 
   let maxPoint = 0;
@@ -100,14 +56,27 @@ async function hinatazakaRecommender() {
     }
   }
 
-  const recommendedMembers1 =
+  const recommendedMember =
     recommendedMembers[Math.floor(Math.random() * recommendedMembers.length)];
-  const selectedMember = membersData.find(
-    (element) => element.name === recommendedMembers1
+  const selectedMember = memberData.find(
+    (element) => element.name === recommendedMember
   );
-  console.log("あなたにぴったりの日向坂メンバーは…");
-  console.log(`${selectedMember.catchphrase}${selectedMember.name}だ!!`);
-  console.log("ぜひメンバーのブログもチェックしてみてね！");
-  console.log(selectedMember.url);
+
+  function delay(ms) {
+    return new Promise((resolve) => {
+      setTimeout(resolve, ms);
+    });
+  }
+
+  async function result() {
+    console.log("あなたにぴったりの日向坂メンバーは…\n");
+    await delay(1000);
+    console.log(`${selectedMember.catchphrase}${selectedMember.name}だ!!\n`);
+    await delay(2000);
+    console.log("メンバーのブログもチェックしてみてね!!");
+    console.log(selectedMember.url);
+  }
+
+  result();
 }
 hinatazakaRecommender();

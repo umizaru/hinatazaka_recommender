@@ -1,7 +1,27 @@
-{
-  "question1": "何期生がいい？",
-  "question2": "",
-  "question3": "神奈川県",
-  "question4": "神奈川県",
-  "question5": 157
-}
+[
+  {
+    "name": "generation",
+    "message": "何期生が好きですか？",
+    "choices": ["1期生", "2期生", "3期生"]
+  },
+  {
+    "name": "from_region",
+    "message": "どの出身地がいいですか？",
+    "choices": ["関東", "関西", "地方"]
+  },
+  {
+    "name": "height_group",
+    "message": "身長はどうですか？",
+    "choices": ["高", "中", "低"]
+  },
+  {
+    "name": "character",
+    "message": "どんなキャラが好きですか？",
+    "choices": ["天然", "賢い", "クール", "おバカ", "ピュア"]
+  },
+  {
+    "name": "looks",
+    "message": "見た目は？",
+    "choices": ["きれい系", "かわいい系"]
+  }
+]
