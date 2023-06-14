@@ -1,0 +1,27 @@
+[
+  {
+    "name": "generation",
+    "message": "何期生が好きですか？",
+    "choices": ["1期生", "2期生", "3期生"]
+  },
+  {
+    "name": "birthplace",
+    "message": "どの出身地がいいですか？",
+    "choices": ["関東", "関西", "地方"]
+  },
+  {
+    "name": "height",
+    "message": "身長はどうですか？",
+    "choices": ["高め", "ふつう", "低め"]
+  },
+  {
+    "name": "character",
+    "message": "どんなキャラが好きですか？",
+    "choices": ["天然", "賢い", "クール", "おバカ", "ピュア"]
+  },
+  {
+    "name": "looks",
+    "message": "見た目はやっぱり？",
+    "choices": ["きれい系", "かわいい系"]
+  }
+]
