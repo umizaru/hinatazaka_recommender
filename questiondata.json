@@ -5,14 +5,14 @@
     "choices": ["1期生", "2期生", "3期生"]
   },
   {
-    "name": "from_region",
+    "name": "birthplace",
     "message": "どの出身地がいいですか？",
     "choices": ["関東", "関西", "地方"]
   },
   {
-    "name": "height_group",
+    "name": "height",
     "message": "身長はどうですか？",
-    "choices": ["高", "中", "低"]
+    "choices": ["高め", "ふつう", "低め"]
   },
   {
     "name": "character",
@@ -21,7 +21,7 @@
   },
   {
     "name": "looks",
-    "message": "見た目は？",
+    "message": "見た目はやっぱり？",
     "choices": ["きれい系", "かわいい系"]
   }
 ]
