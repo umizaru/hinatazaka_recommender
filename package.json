@@ -17,6 +17,9 @@
   ],
   "author": "umizaru",
   "license": "MIT",
+  "bin": {
+    "hinata_recommender": "./hinata.js"
+  },
   "bugs": {
     "url": "https://github.com/umizaru/hinatazaka_recommender/issues"
   },

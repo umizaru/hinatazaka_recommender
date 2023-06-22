@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { readFile } from "fs/promises";
 import pkg from "enquirer";
 const { prompt } = pkg;
