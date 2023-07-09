@@ -20,7 +20,7 @@ npm i hinatazaka_recommender
 
   ※推薦メンバーが複数いる場合は、ランダムに選ばれた 1 名が表示されます。/ If there is more than one recommended member, one randomly selected member will be displayed.
 
-  ![20230614](https://github.com/umizaru/hinatazaka_recommender/assets/57088113/4f3134ad-e544-4c01-9020-24e2e53add80)
+![20230709](https://github.com/umizaru/hinatazaka_recommender/assets/57088113/4858e842-3418-4700-8193-20dbfd434dde)
 
 ## 今後 / In the future
 
