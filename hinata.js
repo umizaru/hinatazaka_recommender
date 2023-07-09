@@ -1,9 +1,6 @@
 #!/usr/bin/env node
 import { readFile } from "fs/promises";
-import pkg from "enquirer";
-const { prompt } = pkg;
-const memberData = JSON.parse(await readFile("./memberdata.json"));
-const questionData = JSON.parse(await readFile("./questiondata.json"));
+import enquirer from "enquirer";
 
 async function hinatazakaRecommender() {
   console.log("日向坂レコメンダーへようこそ!!");
@@ -18,26 +15,39 @@ async function hinatazakaRecommender() {
     choices: ["はい"],
   });
 
-  const answers = {};
-  for (const { name, message, choices } of questionData) {
-    const { [name]: answer } = await prompt({
-      type: "select",
-      name,
-      message,
-      choices,
-    });
-    answers[name] = answer;
+  try {
+    const answers = {};
+    const questionData = JSON.parse(await readFile("./questiondata.json"));
+    const { prompt } = enquirer;
+    for (const { name, message, choices } of questionData) {
+      const { [name]: answer } = await prompt({
+        type: "select",
+        name,
+        message,
+        choices,
+      });
+      answers[name] = answer;
+    }
+  } catch (error) {
+    console.error("予期せぬエラーが発生しました");
+    throw error;
   }
 
-  let memberPoints = {};
-  memberData.forEach((member) => (memberPoints[member.name] = 0));
-  for (const member of memberData) {
-    const { generation, birthplace, height, character, looks } = answers;
-    if (member.generation === generation) memberPoints[member.name] += 1;
-    if (member.birthplace === birthplace) memberPoints[member.name] += 1;
-    if (member.height === height) memberPoints[member.name] += 1;
-    if (member.character === character) memberPoints[member.name] += 1;
-    if (member.looks === looks) memberPoints[member.name] += 1;
+  try {
+    let memberPoints = {};
+    const memberData = JSON.parse(await readFile("./memberdata.json"));
+    memberData.forEach((member) => (memberPoints[member.name] = 0));
+    for (const member of memberData) {
+      const { generation, birthplace, height, character, looks } = answers;
+      if (member.generation === generation) memberPoints[member.name] += 1;
+      if (member.birthplace === birthplace) memberPoints[member.name] += 1;
+      if (member.height === height) memberPoints[member.name] += 1;
+      if (member.character === character) memberPoints[member.name] += 1;
+      if (member.looks === looks) memberPoints[member.name] += 1;
+    }
+  } catch (error) {
+    console.error("予期せぬエラーが発生しました");
+    throw error;
   }
 
   let maxPoint = 0;
