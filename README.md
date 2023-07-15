@@ -7,7 +7,7 @@
 - ターミナルの任意のディレクトリから以下のコマンドを実行してください。/ Run the following command from any directory in your terminal.
 
 ```
-npm i hinatazaka_recommender
+npm i -g hinatazaka_recommender
 ```
 
 ## 推しの見つけ方 / How to find your fave

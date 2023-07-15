@@ -15,39 +15,29 @@ async function hinatazakaRecommender() {
     choices: ["はい"],
   });
 
-  try {
-    const answers = {};
-    const questionData = JSON.parse(await readFile("./questiondata.json"));
-    const { prompt } = enquirer;
-    for (const { name, message, choices } of questionData) {
-      const { [name]: answer } = await prompt({
-        type: "select",
-        name,
-        message,
-        choices,
-      });
-      answers[name] = answer;
-    }
-  } catch (error) {
-    console.error("予期せぬエラーが発生しました");
-    throw error;
+  const answers = {};
+  const questionData = JSON.parse(await readFile("./questiondata.json"));
+  const { prompt } = enquirer;
+  for (const { name, message, choices } of questionData) {
+    const { [name]: answer } = await prompt({
+      type: "select",
+      name,
+      message,
+      choices,
+    });
+    answers[name] = answer;
   }
 
-  try {
-    let memberPoints = {};
-    const memberData = JSON.parse(await readFile("./memberdata.json"));
-    memberData.forEach((member) => (memberPoints[member.name] = 0));
-    for (const member of memberData) {
-      const { generation, birthplace, height, character, looks } = answers;
-      if (member.generation === generation) memberPoints[member.name] += 1;
-      if (member.birthplace === birthplace) memberPoints[member.name] += 1;
-      if (member.height === height) memberPoints[member.name] += 1;
-      if (member.character === character) memberPoints[member.name] += 1;
-      if (member.looks === looks) memberPoints[member.name] += 1;
-    }
-  } catch (error) {
-    console.error("予期せぬエラーが発生しました");
-    throw error;
+  let memberPoints = {};
+  const memberData = JSON.parse(await readFile("./memberdata.json"));
+  memberData.forEach((member) => (memberPoints[member.name] = 0));
+  for (const member of memberData) {
+    const { generation, birthplace, height, character, looks } = answers;
+    if (member.generation === generation) memberPoints[member.name] += 1;
+    if (member.birthplace === birthplace) memberPoints[member.name] += 1;
+    if (member.height === height) memberPoints[member.name] += 1;
+    if (member.character === character) memberPoints[member.name] += 1;
+    if (member.looks === looks) memberPoints[member.name] += 1;
   }
 
   let maxPoint = 0;
