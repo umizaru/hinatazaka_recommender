@@ -8,6 +8,7 @@ async function hinatazakaRecommender() {
     "5つの質問に答えて、自分にぴったりの日向坂メンバーを見つけよう!!\n"
   );
 
+  const { prompt } = enquirer;
   const preparation = await prompt({
     type: "select",
     name: "preparation",
@@ -17,7 +18,6 @@ async function hinatazakaRecommender() {
 
   const answers = {};
   const questionData = JSON.parse(await readFile("./questiondata.json"));
-  const { prompt } = enquirer;
   for (const { name, message, choices } of questionData) {
     const { [name]: answer } = await prompt({
       type: "select",
