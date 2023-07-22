@@ -1,8 +1,13 @@
 #!/usr/bin/env node
 import { readFile } from "fs/promises";
 import enquirer from "enquirer";
+import { fileURLToPath } from "url";
+import path from "path";
 
 async function hinatazakaRecommender() {
+  const __filename = fileURLToPath(import.meta.url);
+  const __dirname = path.dirname(__filename);
+
   console.log("日向坂レコメンダーへようこそ!!");
   console.log(
     "5つの質問に答えて、自分にぴったりの日向坂メンバーを見つけよう!!\n"
@@ -17,7 +22,9 @@ async function hinatazakaRecommender() {
   });
 
   const answers = {};
-  const questionData = JSON.parse(await readFile("./questiondata.json"));
+  const questionData = JSON.parse(
+    await readFile(`${__dirname}/questiondata.json`)
+  );
   for (const { name, message, choices } of questionData) {
     const { [name]: answer } = await prompt({
       type: "select",
@@ -29,7 +36,7 @@ async function hinatazakaRecommender() {
   }
 
   let memberPoints = {};
-  const memberData = JSON.parse(await readFile("./memberdata.json"));
+  const memberData = JSON.parse(await readFile(`${__dirname}/memberdata.json`));
   memberData.forEach((member) => (memberPoints[member.name] = 0));
   for (const member of memberData) {
     const { generation, birthplace, height, character, looks } = answers;
